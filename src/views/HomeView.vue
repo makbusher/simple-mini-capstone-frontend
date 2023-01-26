@@ -8,12 +8,18 @@ export default {
       message: "Welcome to Vue.js!",
       year: "2023",
       location: "Chicago",
-      image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTo3EwEdzdUs6GtLmGyFLcClr-UipWleLJApA&usqp=CAU",
-      count: 0
+      products: []
     };
   },
   created: function() {},
-  methods: {}
+  methods: {
+    getData: function() {
+      axios.get("http://localhost:3000/products.json").then(response => {
+        this.products = response.data
+        console.log(response.data)
+      })
+    }
+  }
 };
 </script>
 
@@ -21,11 +27,13 @@ export default {
   <div class="home">
     <h1>{{ message }}</h1>
     <h3>{{ year }}</h3>
-    <img v-bind:src="image" />
-    <p><button v-on:click="count++">Add Count</button></p>
-    <p>Count is: {{ count }}</p>
+    <p><button v-on:click="getData">Data</button></p>
+    <div v-for="product in products" v-bind:key="product.id">
+      <h3>{{ product.name }}</h3>
+      <p> {{ product.price }}</p>
+      <hr />
+    </div>
     <p>{{ location }}</p>
-    Location: <input type="text" v-model="location" />
   </div>
 </template>
 
