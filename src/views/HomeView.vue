@@ -11,7 +11,9 @@ export default {
       products: []
     };
   },
-  created: function() {},
+  created: function() {
+    this.getData()
+  },
   methods: {
     getData: function() {
       axios.get("http://localhost:3000/products.json").then(response => {
@@ -31,6 +33,7 @@ export default {
     <div v-for="product in products" v-bind:key="product.id">
       <h3>{{ product.name }}</h3>
       <p> {{ product.price }}</p>
+      <p> {{ product.description }}</p>
       <hr />
     </div>
     <p>{{ location }}</p>
